@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 env:
-  MAJOR_MINOR_PATCH: 0.1.0
+  MAJOR_MINOR_PATCH: 1.0.0
 
 name: sample-git-tag-ci
 
