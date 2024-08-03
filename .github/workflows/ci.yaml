@@ -44,16 +44,7 @@ jobs:
           echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
           echo "semantic_version=$SEMANTIC_VERSION" >> $GITHUB_OUTPUT
           echo "major_minor_patch=$MAJOR_MINOR_PATCH" >> $GITHUB_OUTPUT
-      - name: Create semantic versioning git tag
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/v${{ steps.semantic_version.outputs.semantic_version }}",
-              sha: context.sha
-            })
+    
       - name: Delete Git Tags
         uses: KinNeko-De/cleanup-outdated-tag-action@v0.1.1
         with:
