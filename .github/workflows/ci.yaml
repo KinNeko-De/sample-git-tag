@@ -53,41 +53,7 @@ jobs:
               sha: context.sha
             })
       - name: Delete Git Tags
-        uses: actions/github-script@v7
+        uses: KinNeko-De/cleanup-outdated-tag-action/action@v0.1.1
         if: github.ref == 'refs/heads/main'
         with:
-          script: |
-            const existingFeatureBranches = (await github.rest.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })).data.map(branch => branch.name);
-          
-            console.log("Existing feature branches:", existingFeatureBranches);
-          
-            const tags = await github.rest.git.listMatchingRefs({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'tags/v',
-            });
-          
-            for (const tag of tags.data) {
-              const tagName = tag.ref.replace('refs/tags/', '');
-              console.log("Tag:", tagName);
-          
-              const tagParts = /^v[0-9]*\.[0-9]*\.[0-9]*-(.*)\.([0-9]*)$/.exec(tagName);
-              if (tagParts) {
-                const featureBranchName = tagParts[1];
-                console.log("Feature branch name:", featureBranchName);
-          
-                if (!existingFeatureBranches.includes(`feature/${featureBranchName}`)) {
-                  console.log(`Branch ${featureBranchName} does not exist, so deleting tag ${tagName}`);
-                  await github.rest.git.deleteRef({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    ref: `tags/${tagName}`,
-                  });
-                } else {
-                  console.log(`Branch ${featureBranchName} exists, so not deleting tag ${tagName}`);
-                }
-              }
-            }
+          token: ${{ secrets.GITHUB_TOKEN }}
