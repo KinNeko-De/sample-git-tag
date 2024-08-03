@@ -17,6 +17,8 @@ jobs:
       contents: write
     steps:
       - name: Set up debug logging
+        run: echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
+      - name: Set up debug logging
         run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
       - name: Version suffix
         id: version_suffix
