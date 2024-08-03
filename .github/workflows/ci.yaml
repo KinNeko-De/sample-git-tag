@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+        ACTIONS_STEP_DEBUG: true
     steps:
       - name: Version suffix
         id: version_suffix
