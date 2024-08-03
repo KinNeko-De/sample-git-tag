@@ -4,6 +4,7 @@ on:
 
 env:
   MAJOR_MINOR_PATCH: 1.0.0
+  ACTIONS_RUNNER_DEBUG: true
   ACTIONS_STEP_DEBUG: true
 
 name: sample-git-tag-ci
