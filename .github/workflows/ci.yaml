@@ -14,9 +14,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Log ACTIONS_STEP_DEBUG value
-        run: |
-          echo "debug: ${{ secrets.ACTIONS_STEP_DEBUG }}"
       - name: Version suffix
         id: version_suffix
         run: |
@@ -45,11 +42,16 @@ jobs:
           echo 'SEMANTIC_VERSION: ' $SEMANTIC_VERSION
           echo "semantic_version=$SEMANTIC_VERSION" >> $GITHUB_OUTPUT
           echo "major_minor_patch=$MAJOR_MINOR_PATCH" >> $GITHUB_OUTPUT
-      - name: Test
+      - name: Create semantic versioning git tag
         uses: actions/github-script@v7
         with:
           script: |
-            console.debug('Debug message: Action is running');
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/v${{ steps.semantic_version.outputs.semantic_version }}",
+              sha: context.sha
+            })
       - name: Delete Git Tags
         uses: KinNeko-De/cleanup-outdated-tag-action@v0.1.1
         with:
