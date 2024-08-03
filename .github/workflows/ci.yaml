@@ -53,7 +53,7 @@ jobs:
               sha: context.sha
             })
       - name: Delete Git Tags
-        uses: KinNeko-De/cleanup-outdated-tag-action/action@v0.1.1
+        uses: KinNeko-De/cleanup-outdated-tag-action@v0.1.1
         if: github.ref == 'refs/heads/main'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
